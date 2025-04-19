@@ -24,6 +24,5 @@ async function bootstrap() {
   );
 
   await app.listen(8080);
-  console.log(`🚀 Api Documentation = ${await app.getUrl()}/api`);
 }
 bootstrap();
