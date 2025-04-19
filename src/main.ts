@@ -6,12 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const config = new DocumentBuilder()
-    .setTitle('Marketing API')
-    .setDescription('Endpoints for subscriber and campaign management')
-    .setVersion('1.0')
-    .addBearerAuth() // if you use JWT
-    .build();
+  const config = new DocumentBuilder().setTitle('Strive API').build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
