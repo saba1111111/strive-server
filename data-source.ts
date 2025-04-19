@@ -1,0 +1,21 @@
+import { DataSource } from 'typeorm';
+import 'dotenv/config';
+import { SubscriberEntity } from './src/marketing/infrastructure/persistence/entities';
+
+console.log(process.env.node_env);
+
+export default new DataSource({
+  type: 'postgres',
+  host:
+    process.env.node_env === 'development'
+      ? 'localhost'
+      : process.env.POSTGRES_HOST,
+  port: +process.env.POSTGRES_PORT,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
+  entities: [SubscriberEntity],
+  migrations: ['migrations/*.ts'],
+  synchronize: false,
+  logging: false,
+});

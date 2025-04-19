@@ -1,0 +1,3 @@
+export enum Tokens {
+  SUBSCRIBERS_REPOSITORY = 'SUBSCRIBERS_REPOSITORY',
+}
