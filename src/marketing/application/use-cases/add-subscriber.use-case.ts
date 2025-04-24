@@ -6,12 +6,12 @@ import {
 } from '../exceptions';
 import { handleError } from 'src/common/application/utils';
 import { Inject, Injectable } from '@nestjs/common';
-import { Tokens } from '../enum';
+import { MarketingTokens } from '../enum';
 
 @Injectable()
 export class AddSubscriberUseCase {
   constructor(
-    @Inject(Tokens.SUBSCRIBERS_REPOSITORY)
+    @Inject(MarketingTokens.SUBSCRIBERS_REPOSITORY)
     private readonly subscribersRepository: ISubscribersRepository,
   ) {}
 
