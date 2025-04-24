@@ -4,7 +4,7 @@ import { Subscriber } from 'src/marketing/domain/model';
 import { SubscriberEntity } from '../entities';
 import { Repository } from 'typeorm';
 
-export class SubscriberTypeormRepository implements ISubscribersRepository {
+export class SubscribersTypeormRepository implements ISubscribersRepository {
   constructor(
     @InjectRepository(SubscriberEntity)
     private readonly repo: Repository<SubscriberEntity>,

@@ -2,9 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MarketingModule } from './marketing/marketing.module';
-import { SubscriberEntity } from './marketing/infrastructure/persistence/entities';
+import {
+  AdminEntity,
+  SubscriberEntity,
+} from './marketing/infrastructure/persistence/entities';
 import { HealthController } from './health.controller';
 import { TerminusModule } from '@nestjs/terminus';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -19,7 +23,7 @@ import { TerminusModule } from '@nestjs/terminus';
         username: cfg.get('POSTGRES_USER'),
         password: cfg.get('POSTGRES_PASSWORD'),
         database: cfg.get('POSTGRES_DB'),
-        entities: [SubscriberEntity],
+        entities: [SubscriberEntity, AdminEntity],
         synchronize: false,
         migrations: [__dirname + '/../migrations/*{.ts,.js}'],
         migrationsRun: true,
@@ -27,6 +31,9 @@ import { TerminusModule } from '@nestjs/terminus';
       inject: [ConfigService],
     }),
     MarketingModule,
+    JwtModule.register({
+      global: true,
+    }),
   ],
   controllers: [HealthController],
   providers: [],

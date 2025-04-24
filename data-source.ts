@@ -1,8 +1,9 @@
 import { DataSource } from 'typeorm';
 import 'dotenv/config';
-import { SubscriberEntity } from './src/marketing/infrastructure/persistence/entities';
-
-console.log(process.env.node_env);
+import {
+  AdminEntity,
+  SubscriberEntity,
+} from './src/marketing/infrastructure/persistence/entities';
 
 export default new DataSource({
   type: 'postgres',
@@ -12,7 +13,7 @@ export default new DataSource({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  entities: [SubscriberEntity],
+  entities: [SubscriberEntity, AdminEntity],
   migrations: ['migrations/*.ts'],
   synchronize: false,
   logging: false,

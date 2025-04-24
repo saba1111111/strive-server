@@ -1,3 +1,4 @@
-export enum Tokens {
+export enum MarketingTokens {
   SUBSCRIBERS_REPOSITORY = 'SUBSCRIBERS_REPOSITORY',
+  ADMINS_REPOSITORY = 'ADMINS_REPOSITORY',
 }
