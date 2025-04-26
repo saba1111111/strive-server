@@ -60,7 +60,7 @@ export class AdminLoginUseCase {
     const accessTokenExpirationInSeconds = this.configService.get(
       'CMS_ACCESS_TOKEN_EXPIRATION_TIME',
     );
-    const accessToken = await this.tokenService.signAccessToken(payload, {
+    const accessToken = await this.tokenService.signToken(payload, {
       secret: this.configService.get('CMS_ACCESS_TOKEN_SECRET'),
       expiresInSeconds: accessTokenExpirationInSeconds,
     });
