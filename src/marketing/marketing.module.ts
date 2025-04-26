@@ -9,6 +9,7 @@ import { SubscribersTypeormRepository } from './infrastructure/persistence/repos
 import {
   AddSubscriberUseCase,
   AdminLoginUseCase,
+  GetSubscribersUseCase,
 } from './application/use-cases';
 import { MarketingController } from './presentation/controllers';
 import { CommonModule } from 'src/common/common.module';
@@ -34,6 +35,7 @@ import { GetAdminInfoUseCase } from './application/use-cases/get-admin-info.use-
     AddSubscriberUseCase,
     AdminLoginUseCase,
     GetAdminInfoUseCase,
+    GetSubscribersUseCase,
   ],
 })
 export class MarketingModule {}

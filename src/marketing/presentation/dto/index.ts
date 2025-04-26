@@ -1,4 +1,5 @@
 export * from './add-subscriber.dto';
 export * from './add-subscriber-response.dto';
 export * from './admin-login.dto';
-export * from './admin-login-response.dto';
+export * from './subscriber.dto';
+export * from './get-subscribers-response.dto';

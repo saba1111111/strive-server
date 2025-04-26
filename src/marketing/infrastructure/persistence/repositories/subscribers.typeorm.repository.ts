@@ -25,6 +25,23 @@ export class SubscribersTypeormRepository implements ISubscribersRepository {
     return result ? this.mapEntityToModel(result) : null;
   }
 
+  public async findAll({
+    page,
+    limit,
+  }: {
+    page: number;
+    limit: number;
+  }): Promise<{ items: Subscriber[]; total: number }> {
+    const [entities, total] = await this.repo.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      order: { createdAt: 'DESC' },
+    });
+
+    const items = entities.map((e) => this.mapEntityToModel(e));
+    return { items, total };
+  }
+
   private mapEntityToModel(entity: SubscriberEntity): Subscriber {
     return {
       id: entity.id,
