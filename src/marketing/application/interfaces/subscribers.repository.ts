@@ -12,4 +12,6 @@ export interface ISubscribersRepository {
     items: Subscriber[];
     total: number;
   }>;
+
+  countAll(): Promise<number>;
 }

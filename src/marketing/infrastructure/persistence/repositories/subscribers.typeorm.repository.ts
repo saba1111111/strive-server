@@ -42,6 +42,10 @@ export class SubscribersTypeormRepository implements ISubscribersRepository {
     return { items, total };
   }
 
+  public async countAll(): Promise<number> {
+    return this.repo.count();
+  }
+
   private mapEntityToModel(entity: SubscriberEntity): Subscriber {
     return {
       id: entity.id,
