@@ -7,4 +7,11 @@ export interface ISubscribersRepository {
   }): Promise<Subscriber | null>;
 
   findOneByEmail(email: string): Promise<Subscriber | null>;
+
+  findAll(options: { page: number; limit: number }): Promise<{
+    items: Subscriber[];
+    total: number;
+  }>;
+
+  countAll(): Promise<number>;
 }

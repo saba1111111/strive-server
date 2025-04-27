@@ -19,6 +19,13 @@ export class AdminsTypeormRepository implements IAdminsRepository {
 
     return entity ? this.mapEntityToModel(entity) : null;
   }
+
+  public async findOneById(id: number): Promise<Admin | null> {
+    const entity = await this.repo.findOneBy({ id });
+
+    return entity ? this.mapEntityToModel(entity) : null;
+  }
+
   private mapEntityToModel(entity: AdminEntity): Admin {
     return {
       id: entity.id,

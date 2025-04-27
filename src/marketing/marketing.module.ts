@@ -9,18 +9,21 @@ import { SubscribersTypeormRepository } from './infrastructure/persistence/repos
 import {
   AddSubscriberUseCase,
   AdminLoginUseCase,
+  CountSubscribersUseCase,
+  GetSubscribersUseCase,
 } from './application/use-cases';
 import { MarketingController } from './presentation/controllers';
 import { CommonModule } from 'src/common/common.module';
 import { AdminsTypeormRepository } from './infrastructure/persistence/repositories';
-import { AdminsController } from './presentation/controllers/admins.controller';
+import { CmsController } from './presentation/controllers/cms.controller';
+import { GetAdminInfoUseCase } from './application/use-cases/get-admin-info.use-case';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([SubscriberEntity, AdminEntity]),
     CommonModule,
   ],
-  controllers: [MarketingController, AdminsController],
+  controllers: [MarketingController, CmsController],
   providers: [
     {
       provide: MarketingTokens.SUBSCRIBERS_REPOSITORY,
@@ -32,6 +35,9 @@ import { AdminsController } from './presentation/controllers/admins.controller';
     },
     AddSubscriberUseCase,
     AdminLoginUseCase,
+    GetAdminInfoUseCase,
+    GetSubscribersUseCase,
+    CountSubscribersUseCase,
   ],
 })
 export class MarketingModule {}

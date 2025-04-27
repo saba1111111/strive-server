@@ -1,6 +1,13 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { AddSubscriberUseCase } from 'src/marketing/application/use-cases';
-import { AddSubscriberResponseDto, AddSubscriberDto } from '../dto';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  AddSubscriberUseCase,
+  CountSubscribersUseCase,
+} from 'src/marketing/application/use-cases';
+import {
+  AddSubscriberResponseDto,
+  AddSubscriberDto,
+  CountSubscribersResponseDto,
+} from '../dto';
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -13,7 +20,10 @@ import { FailedResponseDto } from 'src/common/presentation/dto';
 @Controller('marketing')
 @ApiTags('marketing')
 export class MarketingController {
-  constructor(private readonly addSubscriberUseCase: AddSubscriberUseCase) {}
+  constructor(
+    private readonly addSubscriberUseCase: AddSubscriberUseCase,
+    private readonly countSubscribersUseCase: CountSubscribersUseCase,
+  ) {}
 
   @Post('subscribe')
   @ApiOperation({ summary: 'Create a new subscriber' })
@@ -28,5 +38,19 @@ export class MarketingController {
   })
   public async addSubscriber(@Body() data: AddSubscriberDto) {
     return this.addSubscriberUseCase.execute(data);
+  }
+
+  @Get('subscribers/count')
+  @ApiOperation({ summary: 'Get number of subscribers' })
+  @ApiCreatedResponse({
+    description: 'Number of subscribers',
+    type: CountSubscribersResponseDto,
+  })
+  @ApiBadRequestResponse({
+    description: 'failed to count subscribers',
+    type: FailedResponseDto,
+  })
+  public async countSubscribers() {
+    return this.countSubscribersUseCase.execute();
   }
 }
