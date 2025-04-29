@@ -1,15 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { SubscriberDto } from './subscriber.dto';
 
-export class GetSubscribersResponseDto {
+export class BasePaginationResultDto {
   @ApiProperty({
-    type: [SubscriberDto],
-    description: 'List of subscribers for this page',
-  })
-  subscribers: SubscriberDto[];
-
-  @ApiProperty({
-    description: 'Total number of subscribers',
+    description: 'Total number of items',
     example: 150,
   })
   total: number;

@@ -1,3 +1,7 @@
+import {
+  TGetPaginatedDataQuery,
+  TGetPaginatedDataResult,
+} from 'src/common/application/types';
 import { Subscriber } from 'src/marketing/domain/model';
 
 export interface ISubscribersRepository {
@@ -8,10 +12,9 @@ export interface ISubscribersRepository {
 
   findOneByEmail(email: string): Promise<Subscriber | null>;
 
-  findAll(options: { page: number; limit: number }): Promise<{
-    items: Subscriber[];
-    total: number;
-  }>;
+  findAll(
+    options: TGetPaginatedDataQuery,
+  ): Promise<TGetPaginatedDataResult<Subscriber>>;
 
   countAll(): Promise<number>;
 }

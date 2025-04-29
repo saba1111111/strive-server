@@ -3,7 +3,9 @@ import { AdminEntity } from '../entities';
 import { Repository } from 'typeorm';
 import { IAdminsRepository } from 'src/marketing/application/interfaces';
 import { Admin } from 'src/marketing/domain/model';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class AdminsTypeormRepository implements IAdminsRepository {
   constructor(
     @InjectRepository(AdminEntity)

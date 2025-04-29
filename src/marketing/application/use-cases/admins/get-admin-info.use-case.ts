@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { MarketingTokens } from '../enum';
-import { IAdminsRepository } from '../interfaces';
 import { handleError } from 'src/common/application/utils';
 import { Admin } from 'src/marketing/domain/model';
+import { IAdminsRepository } from '../../interfaces';
+import { MarketingTokens } from '../../enum';
 
 @Injectable()
 export class GetAdminInfoUseCase {

@@ -10,7 +10,7 @@ import { Request } from 'express';
 import { SharedTokens } from 'src/common/application/enum';
 import { ITokenService } from 'src/common/application/interfaces';
 import { SecurityTokens } from 'src/common/domain/enum';
-import { GetAdminInfoUseCase } from 'src/marketing/application/use-cases/get-admin-info.use-case';
+import { GetAdminInfoUseCase } from 'src/marketing/application/use-cases';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {

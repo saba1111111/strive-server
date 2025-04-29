@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import 'dotenv/config';
 import {
   AdminEntity,
+  CampaignEntity,
   SubscriberEntity,
 } from './src/marketing/infrastructure/persistence/entities';
 
@@ -13,7 +14,7 @@ export default new DataSource({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  entities: [SubscriberEntity, AdminEntity],
+  entities: [SubscriberEntity, AdminEntity, CampaignEntity],
   migrations: ['migrations/*.ts'],
   synchronize: false,
   logging: false,
