@@ -1,12 +1,12 @@
 import { Subscriber } from 'src/marketing/domain/model';
-import { ISubscribersRepository } from '../interfaces';
+import { handleError } from 'src/common/application/utils';
+import { Inject, Injectable } from '@nestjs/common';
+import { MarketingTokens } from '../../enum';
+import { ISubscribersRepository } from '../../interfaces';
 import {
   AlreadySubscribedException,
   SubscriptionFailedException,
-} from '../exceptions';
-import { handleError } from 'src/common/application/utils';
-import { Inject, Injectable } from '@nestjs/common';
-import { MarketingTokens } from '../enum';
+} from '../../../domain/exceptions';
 
 @Injectable()
 export class AddSubscriberUseCase {

@@ -5,7 +5,7 @@ import {
 } from 'src/marketing/application/use-cases';
 import {
   AddSubscriberResponseDto,
-  AddSubscriberDto,
+  AddSubscriberRequestDto,
   CountSubscribersResponseDto,
 } from '../dto';
 import {
@@ -27,7 +27,7 @@ export class MarketingController {
 
   @Post('subscribe')
   @ApiOperation({ summary: 'Create a new subscriber' })
-  @ApiBody({ type: AddSubscriberDto })
+  @ApiBody({ type: AddSubscriberRequestDto })
   @ApiCreatedResponse({
     description: 'Subscriber created successfully',
     type: AddSubscriberResponseDto,
@@ -36,7 +36,7 @@ export class MarketingController {
     description: 'Validation failed',
     type: FailedResponseDto,
   })
-  public async addSubscriber(@Body() data: AddSubscriberDto) {
+  public async addSubscriber(@Body() data: AddSubscriberRequestDto) {
     return this.addSubscriberUseCase.execute(data);
   }
 

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { MarketingTokens } from '../enum';
-import { ISubscribersRepository } from '../interfaces';
 import { handleError } from 'src/common/application/utils';
+import { ISubscribersRepository } from '../../interfaces';
+import { MarketingTokens } from '../../enum';
 
 @Injectable()
 export class GetSubscribersUseCase {

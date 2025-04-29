@@ -3,7 +3,9 @@ import { ISubscribersRepository } from 'src/marketing/application/interfaces';
 import { Subscriber } from 'src/marketing/domain/model';
 import { SubscriberEntity } from '../entities';
 import { Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class SubscribersTypeormRepository implements ISubscribersRepository {
   constructor(
     @InjectRepository(SubscriberEntity)

@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MarketingModule } from './marketing/marketing.module';
 import {
   AdminEntity,
+  CampaignEntity,
   SubscriberEntity,
 } from './marketing/infrastructure/persistence/entities';
 import { HealthController } from './health.controller';
@@ -23,7 +24,7 @@ import { JwtModule } from '@nestjs/jwt';
         username: cfg.get('POSTGRES_USER'),
         password: cfg.get('POSTGRES_PASSWORD'),
         database: cfg.get('POSTGRES_DB'),
-        entities: [SubscriberEntity, AdminEntity],
+        entities: [SubscriberEntity, AdminEntity, CampaignEntity],
         synchronize: false,
         migrations: [__dirname + '/../migrations/*{.ts,.js}'],
         migrationsRun: true,
