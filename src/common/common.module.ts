@@ -21,10 +21,6 @@ import { JwtService } from './infrastructure/custom-jwt.service';
       useClass: JwtService,
     },
   ],
-  exports: [
-    SharedTokens.MAIL_SENDER_PROVIDER,
-    SharedTokens.HASH_SERVICE_PROVIDER,
-    SharedTokens.TOKEN_SERVICE_PROVIDER,
-  ],
+  exports: [SharedTokens.MAIL_SENDER_PROVIDER, SharedTokens.HASH_SERVICE_PROVIDER, SharedTokens.TOKEN_SERVICE_PROVIDER],
 })
 export class CommonModule {}

@@ -31,19 +31,13 @@ export class AdminLoginUseCase {
         throw new AdminNotFoundException(data.email);
       }
 
-      const isPasswordValid = await this.hashServiceProvider.compare(
-        data.password,
-        admin.password,
-      );
+      const isPasswordValid = await this.hashServiceProvider.compare(data.password, admin.password);
       if (!isPasswordValid) {
         // if password is not valid, throw not found error to not expose who is registered and who is not
         throw new AdminNotFoundException(data.email);
       }
 
-      await this.generateAndSetAccessToken(
-        { id: admin.id, email: admin.email },
-        res,
-      );
+      await this.generateAndSetAccessToken({ id: admin.id, email: admin.email }, res);
 
       return {
         admin: {
@@ -57,17 +51,13 @@ export class AdminLoginUseCase {
   }
 
   public async generateAndSetAccessToken(payload: object, res: Response) {
-    const accessTokenExpirationInSeconds = this.configService.get(
-      'CMS_ACCESS_TOKEN_EXPIRATION_TIME',
-    );
+    const accessTokenExpirationInSeconds = this.configService.get('CMS_ACCESS_TOKEN_EXPIRATION_TIME');
     const accessToken = await this.tokenService.signToken(payload, {
       secret: this.configService.get('CMS_ACCESS_TOKEN_SECRET'),
       expiresInSeconds: accessTokenExpirationInSeconds,
     });
 
-    const accessExpireDate = getDateAfter(
-      Number(accessTokenExpirationInSeconds),
-    );
+    const accessExpireDate = getDateAfter(Number(accessTokenExpirationInSeconds));
     res.cookie(SecurityTokens.ACCESS_TOKEN, accessToken, {
       httpOnly: false,
       expires: accessExpireDate,

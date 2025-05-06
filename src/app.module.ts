@@ -2,17 +2,15 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MarketingModule } from './marketing/marketing.module';
-import {
-  AdminEntity,
-  CampaignEntity,
-  SubscriberEntity,
-} from './marketing/infrastructure/persistence/entities';
+import { AdminEntity, CampaignEntity, SubscriberEntity } from './marketing/infrastructure/persistence/entities';
 import { HealthController } from './health.controller';
 import { TerminusModule } from '@nestjs/terminus';
 import { JwtModule } from '@nestjs/jwt';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     TerminusModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({

@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Query,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Request, UseGuards } from '@nestjs/common';
 import {
   AdminLoginUseCase,
   CreateCampaignsUseCase,
@@ -27,14 +16,7 @@ import {
   SubscriberDto,
   UpdateCampaignRequestDto,
 } from '../dto';
-import {
-  ApiBadRequestResponse,
-  ApiBody,
-  ApiCreatedResponse,
-  ApiOperation,
-  ApiQuery,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FailedResponseDto, PaginationDto } from 'src/common/presentation/dto';
 import { Request as ExpressRequest } from 'express';
 import { JwtAuthGuard } from '../guards';
@@ -64,10 +46,7 @@ export class CmsController {
     description: 'Wrong credentials',
     type: FailedResponseDto,
   })
-  public async addSubscriber(
-    @Request() request: ExpressRequest,
-    @Body() data: AdminLoginDto,
-  ) {
+  public async addSubscriber(@Request() request: ExpressRequest, @Body() data: AdminLoginDto) {
     return this.adminLoginUseCase.execute(data, request.res);
   }
 
@@ -82,9 +61,7 @@ export class CmsController {
     description: 'Not authorized',
     type: FailedResponseDto,
   })
-  public async getAdminInfo(
-    @Request() request: UserRequest<TAdminWithoutSensitiveInfo>,
-  ) {
+  public async getAdminInfo(@Request() request: UserRequest<TAdminWithoutSensitiveInfo>) {
     return { admin: request.user };
   }
 
@@ -196,10 +173,7 @@ export class CmsController {
     description: 'Not authorized or delete not allowed',
     type: FailedResponseDto,
   })
-  public async deleteCampaign(
-    @Param('id') id: string,
-    @Request() request: UserRequest<TAdminWithoutSensitiveInfo>,
-  ) {
+  public async deleteCampaign(@Param('id') id: string, @Request() request: UserRequest<TAdminWithoutSensitiveInfo>) {
     const campaignId = parseInt(id, 10);
     return this.deleteCampaignUseCase.execute(campaignId, request.user);
   }

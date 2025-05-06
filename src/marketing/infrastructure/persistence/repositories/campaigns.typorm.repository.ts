@@ -1,17 +1,12 @@
 import { ICampaignsRepository } from 'src/marketing/application/interfaces';
-import {
-  TCreateCampaignRepository,
-  TEditCampaignQuery,
-} from 'src/marketing/application/types';
+import { TCreateCampaignRepository, TEditCampaignQuery } from 'src/marketing/application/types';
 import { Campaign, CampaignWithAdminInfo } from 'src/marketing/domain/model';
 import { CampaignEntity } from '../entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {
-  TGetPaginatedDataQuery,
-  TGetPaginatedDataResult,
-} from 'src/common/application/types';
+import { TGetPaginatedDataQuery, TGetPaginatedDataResult } from 'src/common/application/types';
 import { Injectable } from '@nestjs/common';
+import { CampaignStatus } from 'src/marketing/domain/enum';
 
 @Injectable()
 export class CampaignsTypeormRepository implements ICampaignsRepository {
@@ -26,9 +21,7 @@ export class CampaignsTypeormRepository implements ICampaignsRepository {
     return this.mapEntityToCampaignModel(entity);
   }
 
-  public async findAll(
-    options: TGetPaginatedDataQuery,
-  ): Promise<TGetPaginatedDataResult<CampaignWithAdminInfo>> {
+  public async findAll(options: TGetPaginatedDataQuery): Promise<TGetPaginatedDataResult<CampaignWithAdminInfo>> {
     const { page, limit } = options;
     const [entities, total] = await this.repo
       .createQueryBuilder('c')
@@ -38,16 +31,11 @@ export class CampaignsTypeormRepository implements ICampaignsRepository {
       .take(limit)
       .getManyAndCount();
 
-    const items = entities.map((e) =>
-      this.mapEntityToCampaignWithAdminInfoModel(e),
-    );
+    const items = entities.map((e) => this.mapEntityToCampaignWithAdminInfoModel(e));
     return { items, total };
   }
 
-  public async edit(
-    id: number,
-    campaignData: TEditCampaignQuery,
-  ): Promise<Campaign> {
+  public async edit(id: number, campaignData: TEditCampaignQuery): Promise<Campaign> {
     await this.repo.update(id, campaignData);
     const entity = await this.repo.findOneBy({ id });
     return this.mapEntityToCampaignModel(entity);
@@ -60,6 +48,25 @@ export class CampaignsTypeormRepository implements ICampaignsRepository {
 
   public async findOne(id: number): Promise<Campaign> {
     const entity = await this.repo.findOneBy({ id });
+
+    return entity ? this.mapEntityToCampaignModel(entity) : null;
+  }
+
+  public async findActiveCampaign(): Promise<Campaign> {
+    const entity = await this.repo.findOneBy({
+      status: CampaignStatus.InProgress,
+    });
+
+    return entity ? this.mapEntityToCampaignModel(entity) : null;
+  }
+
+  public async findCampaignWhichNeedToStart(): Promise<Campaign> {
+    const entity = await this.repo
+      .createQueryBuilder('c')
+      .where('c.status = :status', { status: CampaignStatus.NotStarted })
+      .andWhere('c.startAt <= NOW()')
+      .orderBy('c.startAt', 'ASC')
+      .getOne();
 
     return entity ? this.mapEntityToCampaignModel(entity) : null;
   }
@@ -78,9 +85,7 @@ export class CampaignsTypeormRepository implements ICampaignsRepository {
     };
   }
 
-  private mapEntityToCampaignWithAdminInfoModel(
-    entity: CampaignEntity,
-  ): CampaignWithAdminInfo {
+  private mapEntityToCampaignWithAdminInfoModel(entity: CampaignEntity): CampaignWithAdminInfo {
     return {
       ...this.mapEntityToCampaignModel(entity),
       adminEmail: entity.admin?.email ?? null,

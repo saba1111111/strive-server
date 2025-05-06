@@ -3,10 +3,7 @@ import { handleError } from 'src/common/application/utils';
 import { Inject, Injectable } from '@nestjs/common';
 import { MarketingTokens } from '../../enum';
 import { ISubscribersRepository } from '../../interfaces';
-import {
-  AlreadySubscribedException,
-  SubscriptionFailedException,
-} from '../../../domain/exceptions';
+import { AlreadySubscribedException, SubscriptionFailedException } from '../../../domain/exceptions';
 
 @Injectable()
 export class AddSubscriberUseCase {
@@ -17,9 +14,7 @@ export class AddSubscriberUseCase {
 
   async execute(data: { email: string; phone?: string }): Promise<Subscriber> {
     try {
-      const subscriber = await this.subscribersRepository.findOneByEmail(
-        data.email,
-      );
+      const subscriber = await this.subscribersRepository.findOneByEmail(data.email);
       if (subscriber) {
         throw new AlreadySubscribedException(data.email);
       }
