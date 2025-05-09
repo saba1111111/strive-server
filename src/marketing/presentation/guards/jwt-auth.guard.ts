@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  CanActivate,
-  ExecutionContext,
-  UnauthorizedException,
-  Inject,
-} from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { SharedTokens } from 'src/common/application/enum';
@@ -39,9 +33,7 @@ export class JwtAuthGuard implements CanActivate {
         }>(accessToken, secretKey);
 
         if (accessPayload) {
-          const admin = await this.getAdminInfoUseCase.execute(
-            accessPayload.id,
-          );
+          const admin = await this.getAdminInfoUseCase.execute(accessPayload.id);
           if (!admin) {
             throw new UnauthorizedException('Invalid access token');
           }
