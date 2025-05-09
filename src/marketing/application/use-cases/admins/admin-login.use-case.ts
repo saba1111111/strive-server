@@ -61,6 +61,8 @@ export class AdminLoginUseCase {
     res.cookie(SecurityTokens.ACCESS_TOKEN, accessToken, {
       httpOnly: false,
       expires: accessExpireDate,
+      secure: true,
+      sameSite: 'none',
     });
   }
 }
