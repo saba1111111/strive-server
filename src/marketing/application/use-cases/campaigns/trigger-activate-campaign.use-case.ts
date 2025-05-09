@@ -48,11 +48,10 @@ export class TriggerActivateCampaignUseCase {
       });
 
       let page = 1;
-      const limit = 50;
+      const limit = 20;
 
       while (true) {
         const { items: subscribers } = await this.subscribersRepository.findAll({ page, limit });
-        console.log('subscribers', subscribers);
 
         if (subscribers.length === 0) break;
 
@@ -66,6 +65,7 @@ export class TriggerActivateCampaignUseCase {
             console.error(`❌ Failed to send message to ${subscriber.email}:`, result.reason);
           }
         });
+        await new Promise((resolve) => setTimeout(resolve, 3000));
 
         page++;
       }
