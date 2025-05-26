@@ -13,10 +13,7 @@ export class JwtService implements ITokenService {
     });
   }
 
-  public async verifyToken<T>(
-    token: string,
-    secret: string,
-  ): Promise<T | null> {
+  public async verifyToken<T>(token: string, secret: string): Promise<T | null> {
     try {
       const payload = await this.jwtService.verifyAsync(token, {
         secret,

@@ -12,10 +12,7 @@ export class SubscribersTypeormRepository implements ISubscribersRepository {
     private readonly repo: Repository<SubscriberEntity>,
   ) {}
 
-  public async save(subscriber: {
-    email: string;
-    phone?: string;
-  }): Promise<Subscriber | null> {
+  public async save(subscriber: { email: string; phone?: string }): Promise<Subscriber | null> {
     const result = await this.repo.save(subscriber);
 
     return result ? this.mapEntityToModel(result) : null;
