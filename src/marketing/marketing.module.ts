@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AdminEntity, CampaignEntity, SubscriberEntity } from './infrastructure/persistence/entities';
+import {
+  AdminEntity,
+  CampaignEntity,
+  LlmResponseEntity,
+  SubscriberEntity,
+} from './infrastructure/persistence/entities';
 import { MarketingTokens } from './application/enum';
 import { SubscribersTypeormRepository } from './infrastructure/persistence/repositories/subscribers.typeorm.repository';
 import {
@@ -17,13 +22,14 @@ import {
 } from './application/use-cases';
 import { MarketingController } from './presentation/controllers';
 import { CommonModule } from 'src/common/common.module';
-import { AdminsTypeormRepository } from './infrastructure/persistence/repositories';
+import { AdminsTypeormRepository, LlmResponsesTypeormRepository } from './infrastructure/persistence/repositories';
 import { CmsController } from './presentation/controllers/cms.controller';
-import { CampaignsTypeormRepository } from './infrastructure/persistence/repositories/campaigns.typorm.repository';
+import { CampaignsTypeormRepository } from './infrastructure/persistence/repositories/campaigns.typeorm.repository';
 import { TriggerActivateCampaignCron } from './infrastructure/cron';
+import { AskModelsUseCase, GetLlmModelsResponsesUseCase } from './application/use-cases/llms';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SubscriberEntity, AdminEntity, CampaignEntity]), CommonModule],
+  imports: [TypeOrmModule.forFeature([SubscriberEntity, AdminEntity, CampaignEntity, LlmResponseEntity]), CommonModule],
   controllers: [MarketingController, CmsController],
   providers: [
     {
@@ -38,6 +44,10 @@ import { TriggerActivateCampaignCron } from './infrastructure/cron';
       provide: MarketingTokens.CAMPAIGNS_REPOSITORY,
       useClass: CampaignsTypeormRepository,
     },
+    {
+      provide: MarketingTokens.LLM_RESPONSES_REPOSITORY,
+      useClass: LlmResponsesTypeormRepository,
+    },
     // useCases
     AddSubscriberUseCase,
     AdminLoginUseCase,
@@ -49,6 +59,8 @@ import { TriggerActivateCampaignCron } from './infrastructure/cron';
     EditCampaignUseCase,
     DeleteCampaignUseCase,
     TriggerActivateCampaignUseCase,
+    AskModelsUseCase,
+    GetLlmModelsResponsesUseCase,
 
     // crons
     TriggerActivateCampaignCron,

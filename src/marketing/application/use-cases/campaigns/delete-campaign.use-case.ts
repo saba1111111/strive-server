@@ -12,10 +12,7 @@ export class DeleteCampaignUseCase {
     private readonly campaignsRepository: ICampaignsRepository,
   ) {}
 
-  public async execute(
-    campaignId: number,
-    admin: TAdminWithoutSensitiveInfo,
-  ): Promise<boolean> {
+  public async execute(campaignId: number, admin: TAdminWithoutSensitiveInfo): Promise<boolean> {
     try {
       const campaign = await this.campaignsRepository.findOne(campaignId);
       CampaignValidator.validateCanMutate(campaign, campaignId);

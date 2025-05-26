@@ -22,6 +22,8 @@ import { Request as ExpressRequest } from 'express';
 import { JwtAuthGuard } from '../guards';
 import { UserRequest } from 'src/common/application/interfaces';
 import { TAdminWithoutSensitiveInfo } from 'src/marketing/application/types';
+import { AskModelsDto } from '../dto/llms';
+import { AskModelsUseCase, GetLlmModelsResponsesUseCase } from 'src/marketing/application/use-cases/llms';
 
 @Controller('cms')
 @ApiTags('cms')
@@ -33,6 +35,8 @@ export class CmsController {
     private readonly getCampaignsUseCase: GetCampaignsUseCase,
     private readonly editCampaignUseCase: EditCampaignUseCase,
     private readonly deleteCampaignUseCase: DeleteCampaignUseCase,
+    private readonly askModelsUseCase: AskModelsUseCase,
+    private readonly getLlmModelsResponsesUseCase: GetLlmModelsResponsesUseCase,
   ) {}
 
   @Post('login')
@@ -176,5 +180,49 @@ export class CmsController {
   public async deleteCampaign(@Param('id') id: string, @Request() request: UserRequest<TAdminWithoutSensitiveInfo>) {
     const campaignId = parseInt(id, 10);
     return this.deleteCampaignUseCase.execute(campaignId, request.user);
+  }
+
+  @Post('llm/ask-models')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Ask models' })
+  @ApiCreatedResponse({
+    description: 'Models asked successfully',
+    type: SubscriberDto,
+  })
+  @ApiBadRequestResponse({
+    description: 'Not authorized',
+    type: FailedResponseDto,
+  })
+  public async askModels(@Body() data: AskModelsDto, @Request() request: UserRequest<TAdminWithoutSensitiveInfo>) {
+    return this.askModelsUseCase.execute(data, request.user);
+  }
+
+  @Get('llm/models-responses')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get models responses' })
+  @ApiCreatedResponse({
+    description: 'Models responses fetched successfully',
+    type: GetCampaignsResponseDto,
+  })
+  @ApiBadRequestResponse({
+    description: 'Not authorized',
+    type: FailedResponseDto,
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Page number (default: 1)',
+    example: 1,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Items per page (max: 100, default: 20)',
+    example: 20,
+  })
+  public async getModelsResponses(@Query() pagination: PaginationDto) {
+    return this.getLlmModelsResponsesUseCase.execute(pagination);
   }
 }

@@ -17,7 +17,6 @@ export class JwtAuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-
     if (!request) {
       throw new UnauthorizedException('Invalid request context');
     }

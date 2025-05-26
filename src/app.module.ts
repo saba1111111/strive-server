@@ -2,7 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MarketingModule } from './marketing/marketing.module';
-import { AdminEntity, CampaignEntity, SubscriberEntity } from './marketing/infrastructure/persistence/entities';
+import {
+  AdminEntity,
+  CampaignEntity,
+  LlmResponseEntity,
+  SubscriberEntity,
+} from './marketing/infrastructure/persistence/entities';
 import { HealthController } from './health.controller';
 import { TerminusModule } from '@nestjs/terminus';
 import { JwtModule } from '@nestjs/jwt';
@@ -22,7 +27,7 @@ import { ScheduleModule } from '@nestjs/schedule';
         username: cfg.get('POSTGRES_USER'),
         password: cfg.get('POSTGRES_PASSWORD'),
         database: cfg.get('POSTGRES_DB'),
-        entities: [SubscriberEntity, AdminEntity, CampaignEntity],
+        entities: [SubscriberEntity, AdminEntity, CampaignEntity, LlmResponseEntity],
         synchronize: false,
         migrations: [__dirname + '/../migrations/*{.ts,.js}'],
         migrationsRun: true,
