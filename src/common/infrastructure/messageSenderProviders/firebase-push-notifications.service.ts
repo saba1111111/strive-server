@@ -39,6 +39,7 @@ export class FirebasePushNotificationsService implements IMessageSenderProvider 
     };
 
     try {
+      console.log('payload', payload);
       const response = await getMessaging().send(payload);
       this.logger.log(`Push notification sent: ${response}`);
       return true;
