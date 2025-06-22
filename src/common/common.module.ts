@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SharedTokens } from './application/enum';
-import { MailSenderService } from './infrastructure/messageSenderProviders';
+import { FirebasePushNotificationsService, MailSenderService } from './infrastructure/messageSenderProviders';
 import { BcryptService } from './infrastructure/bcrypt.service';
 import { JwtService } from './infrastructure/custom-jwt.service';
 import { DeepSeekService, OpenAiService } from './infrastructure/llmProviders';
@@ -29,6 +29,10 @@ import { DeepSeekService, OpenAiService } from './infrastructure/llmProviders';
       provide: SharedTokens.LLM_CLIENT_DEEPSEEK_PROVIDER,
       useClass: DeepSeekService,
     },
+    {
+      provide: SharedTokens.FIREBASE_NOTIFICATIONS_PROVIDER,
+      useClass: FirebasePushNotificationsService,
+    },
   ],
   exports: [
     SharedTokens.MAIL_SENDER_PROVIDER,
@@ -36,6 +40,7 @@ import { DeepSeekService, OpenAiService } from './infrastructure/llmProviders';
     SharedTokens.TOKEN_SERVICE_PROVIDER,
     SharedTokens.LLM_CLIENT_OPENAI_PROVIDER,
     SharedTokens.LLM_CLIENT_DEEPSEEK_PROVIDER,
+    SharedTokens.FIREBASE_NOTIFICATIONS_PROVIDER,
   ],
 })
 export class CommonModule {}
