@@ -1,20 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import {
-  AddSubscriberUseCase,
-  CountSubscribersUseCase,
-} from 'src/marketing/application/use-cases';
-import {
-  AddSubscriberResponseDto,
-  AddSubscriberRequestDto,
-  CountSubscribersResponseDto,
-} from '../dto';
-import {
-  ApiBadRequestResponse,
-  ApiBody,
-  ApiCreatedResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { AddSubscriberUseCase, CountSubscribersUseCase } from 'src/marketing/application/use-cases';
+import { AddSubscriberResponseDto, AddSubscriberRequestDto, CountSubscribersResponseDto } from '../dto';
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FailedResponseDto } from 'src/common/presentation/dto';
 
 @Controller('marketing')
