@@ -33,6 +33,9 @@ export class FirebasePushNotificationsService implements IMessageSenderProvider 
         body: message,
         imageUrl,
       },
+      data: {
+        icon: 'ic_notification',
+      },
     };
 
     try {
