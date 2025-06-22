@@ -24,11 +24,7 @@ export class SendNotificationUseCase {
       const title = titleMatch ? titleMatch[1].trim() : NotificationMessageTitles[data.triggerEvent];
       const body = titleMatch ? message.replace(titleMatch[0], '').trim() : message;
 
-      await this.firebaseNotificationsProvider.sendMessage(
-        'dfZtjrxoQ8a54hd__fWqlK:APA91bEAII35gqJ3fNh-i0xb5s0ZkNOhHOBDT4q35oVuYdtToeCWt72aNJu-i_PlbgtzL5Ki21aFPJxT-B8qEA6Y3oJyMOtkcfPC2Cxe3d9RoxgSmZRAAe0',
-        title,
-        body,
-      );
+      await this.firebaseNotificationsProvider.sendMessage(data.to, title, body);
 
       return true;
     } catch (error) {
